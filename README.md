@@ -9,12 +9,14 @@ The package include three scripts files: - run_explore, - run_trainmodel, - run_
 
 ### 1. run_explore
 
-the information gain were first calculated for the independent variables for each dependant variable. It was found that, the Start time is relevant and so day trend may exist for dependent variables with regard to the Start time. This observation was confirmed by average trend extraction.
-The step is time consuming. The relevant codes are commented out. A pre-generated file info_gain.txt is included in the output folder.
+the information gain were first calculated for the independent variables for each dependant variable. It was found that, the Start time is relevant and so day trend may exist for dependent variables with regard to the Start time. This observation was confirmed by average trend extraction. The step is time consuming. The relevant codes are commented out. A pre-generated file info_gain.txt is included in the output folder.
+
 The bus dispatch intervals are first investigated. This is just to confirm that it is not meaningful to resample the records and make the series evenly distributed over time. Instead, the dependent variables are treated as sequential series only with respect to their temporal order. The time stamps are later used in trend look up, but not considered in residual modelling.
-In average trend extraction, for each dependant variable, all the historical samples are aligned according to their Start time without considering the date. The align the series is cleaned, smoothed and resampled to form a trend template for every dependant variable. Two way-EWMA filtering is used here to get the smoothed day trend without time-shifts.
-Smooth ratio. <ALPHA> is used here to control the smoothness.
+
+In average trend extraction, for each dependant variable, all the historical samples are aligned according to their Start time without considering the date. The align the series is cleaned, smoothed and resampled to form a trend template for every dependant variable. Two way-EWMA filtering is used here to get the smoothed day trend without time-shifts. Smooth ratio. <ALPHA> is used here to control the smoothness.
+
 Then the crosscorrelation between detrending residuals are investigated. It’s found that residuals mostly are not cross-correlated. Only one-pair have low correlation. We can assume there is no linear relationship between different dependant variables after detrending.
+
 Then, the autocorrelation and stationarity analysis is performed on both the original series and the detrained 
 residuals to find the tentative p, d, q order for ARIMA model.
 
@@ -22,6 +24,7 @@ residuals to find the tentative p, d, q order for ARIMA model.
 ### 2. run_trainmodel
 
 ARIMA model were used to describe both the original series and detrended residual.
+
 It is assumed the process can be describe by a static model. Thus the classical ARIMA model updating procedure (predict-include new data-reestimate ) is not used. Instead, we
 1. Select ARIMA models using training dataset, fix the model and then
 2. Use the fitted model to get predictions conditional on the observations in the test dataset
