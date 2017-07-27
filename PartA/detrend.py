@@ -7,11 +7,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def day_diff(y, order=1):
+def day_diff(ts, order=1):
+    y=pd.Series(ts)
     for i in range(order):
         y=y.groupby(by=y.index.date).transform(pd.Series.diff)
     return y
-
 
 
 #get the 1-step forecast from d-order deference , there is close-form but iterative process is used for flexiblity.
@@ -85,7 +85,8 @@ def smoothing(y, filter='ewm', a = 0.1):
 
 
 
-def rmvoutliers_fill(y, n=1, fill='moving mean'):
+def rmvoutliers_fill(ts, n=1, fill='moving mean'):
+    y = pd.Series(ts)
 
     """
     remove outliers and fill up missing/outlier points; inplace change

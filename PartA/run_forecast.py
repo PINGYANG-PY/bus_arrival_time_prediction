@@ -94,7 +94,8 @@ def forecast(df, field_names, mdlname = None):
         for f in field_names:
             y = df[f]
             y_trend = trend_lookup(y, trends[f], idx=df['Start'],
-                                   resample_interval=RESAMPLING_INTERVAL) 
+                                   resample_interval=RESAMPLING_INTERVAL)
+
             resid = y - y_trend
             yy_hat[f]=y_trend+resid.groupby(resid.index.date).apply(lambda x: x.ewm(alpha=ALPHA2).agg('mean').shift(1))
 

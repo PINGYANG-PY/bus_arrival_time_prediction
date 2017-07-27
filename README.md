@@ -51,7 +51,7 @@ NOTE:
 1. The generated figures and results are saved in folder ./output/....
 2. Include the folder “sampen" in the working directory for calculating sample entropy.
 
-TOFIX: The run-time SettingWithCopyWarning warnings are due to the use of pd.Datafram.loc[index][field], instead of pd.Datafram.loc[index,field]. 
+
 
 
 ## Part B

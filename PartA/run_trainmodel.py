@@ -37,9 +37,8 @@ def main():
 
 
     #denoise, forward mode, can be altered to use online
-    df, trends,df_res= denoise_extract_trend(df,  field_names=s.field_names, alpha=ALPHA, verbose=VERBOSE, resample_interval=s.RESAMPLING_INTERVAL)
-
-
+    df, trends,df_res= denoise_extract_trend(df,  field_names=s.field_names,
+                                             alpha=ALPHA, verbose=VERBOSE, resample_interval=s.RESAMPLING_INTERVAL)
 
 
     # select, estimate and pickle the ARIMA models for the original series and the detrending residuals (ARIMA with trend term)
