@@ -22,9 +22,6 @@ def plot_bar_chart(means, stds):
     for i in range(0, means.shape[0]):
 
         N = means.shape[1]
-        # mean = [20, 35, 30, 35, 27]
-        # std = [2, 3, 4, 1, 2]
-        #
         ind = np.arange(N)  # the x locations for the groups
         rects.append(ax.bar(ind+i*width, means[i,:], width, yerr=stds[i,:]))
 
