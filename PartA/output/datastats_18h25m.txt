@@ -1,0 +1,91 @@
+
+
+
+===================================================================================
+                         Daily bus dispatch intervals                              
+===================================================================================
+Check the day trend plot of dispatch interval in the folder ./output/trends
+
+ The mean interval between bus runs is 445 .
+
+The trend plot shows
+     	 1.the dispatch interval varies over a day.
+      	 2.The standard deviation over the smoothing window indicates that the dispatch interval varies greatly between different days.
+
+Based on the above observation and considering the randomness in bus dispatch, it does not make much sense to evenly resample the daily data over time. Instead, we just treat each bus run in a day as a sequential data point.
+
+
+
+
+===================================================================================
+              Average Day Trends of All the Stop/Travel Times                      
+===================================================================================
+Check the day trend plots in folder ./output/trends. The plots is downsampled for ploting
+
+
+
+===================================================================================
+              cross-correlation between the detrend residuals                      
+===================================================================================
+
+
+Between [0.5  1.0) 
+-------------------
+Empty DataFrame
+Columns: [distance, field1, field2, xcorr]
+Index: []
+
+
+Between [0.4  0.5) 
+-------------------
+distance  field1      field2     xcorr
+       1  Stop15  Stop15to16  0.405491
+
+
+Between [0.3  0.4) 
+-------------------
+Empty DataFrame
+Columns: [distance, field1, field2, xcorr]
+Index: []
+
+ We observe that residuals after detrending mostly are not cross-correlated. Only few couples have low correlation. 
+
+
+
+===================================================================================
+       Investigate p,d,q orders for ARIMA model fitting                             
+===================================================================================
+
+The d-order is determined by differencing+ADF test iteratively. 
+Tentative p,q are chosen by investigating the autocorrelation and partial autocorrelation plots. Check the ACF-PACF plots in the folder ./output/acf-pacf
+
+
+               ARIMA(p,d,q) order - by Acf-Pacf confidence level check                           
+--------------------------------------------------------------------------------------------------
+              Stop1   Stop1to2      Stop2   Stop2to3      Stop3   Stop3to4      Stop4   Stop4to5  \
+series    (0, 0, 0)  (0, 1, 1)  (0, 1, 1)  (0, 0, 0)  (4, 0, 0)  (3, 0, 4)  (0, 1, 1)  (4, 0, 0)   
+residual  (0, 0, 0)  (0, 0, 0)  (0, 0, 0)  (1, 0, 1)  (0, 0, 0)  (0, 0, 0)  (0, 0, 0)  (4, 0, 4)   
+
+              Stop5   Stop5to6      Stop6   Stop6to7      Stop7   Stop7to8      Stop8   Stop8to9  \
+series    (0, 1, 1)  (2, 0, 2)  (0, 1, 1)  (2, 0, 3)  (0, 1, 1)  (0, 0, 0)  (4, 0, 4)  (3, 0, 4)   
+residual  (1, 0, 1)  (0, 0, 0)  (1, 0, 1)  (1, 0, 1)  (1, 0, 3)  (1, 0, 1)  (0, 0, 0)  (2, 0, 3)   
+
+              Stop9  Stop9to10     Stop10 Stop10to11     Stop11 Stop11to12     Stop12 Stop12to13  \
+series    (4, 0, 0)  (4, 0, 0)  (0, 0, 0)  (2, 0, 0)  (0, 0, 0)  (0, 0, 0)  (0, 0, 0)  (0, 0, 0)   
+residual  (4, 0, 0)  (4, 0, 0)  (0, 0, 0)  (0, 1, 1)  (3, 0, 0)  (0, 0, 0)  (0, 0, 0)  (3, 0, 0)   
+
+             Stop13 Stop13to14     Stop14 Stop14to15     Stop15 Stop15to16     Stop16 Stop16to17  \
+series    (0, 0, 0)  (1, 0, 3)  (0, 0, 0)  (3, 1, 1)  (0, 1, 1)  (4, 0, 0)  (0, 1, 1)  (1, 0, 2)   
+residual  (3, 0, 0)  (0, 0, 0)  (0, 0, 0)  (3, 0, 0)  (2, 0, 4)  (0, 0, 0)  (0, 0, 0)  (1, 0, 1)   
+
+             Stop17 Stop17to18     Stop18 Stop18to19     Stop19 Stop19to20     Stop20 Stop20to21  
+series    (0, 1, 1)  (3, 0, 0)  (0, 1, 1)  (0, 0, 0)  (0, 1, 1)  (0, 1, 1)  (0, 1, 1)  (0, 1, 1)  
+residual  (0, 0, 0)  (2, 0, 2)  (0, 1, 1)  (2, 0, 2)  (1, 0, 1)  (1, 0, 1)  (1, 0, 1)  (0, 0, 0)  
+
+For 17 out of 40 variables, the detrend residuals appear as white noise. For these stops/spans, the trend
+average corresponding to the Start time will be a good prediction. 
+
+
+
+
+ ----------------------    The data exploration is over!    ------------------------------  
